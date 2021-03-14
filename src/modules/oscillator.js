@@ -13,4 +13,4 @@ export function getSineWave(u, n, freqModulation) {
     return Math.sin(frequency * twoPiDividedBySampleRate * cyclicN) * amplitude
 }
 
-export default createModule(getSineWave)
+export default createModule(getSineWave, 'generator')
