@@ -51,7 +51,7 @@ export function* waveGenerator() {
       }, wave)
 
       // Decrease volume 
-      const mixVolume =  0.3
+      const mixVolume =  0.2
       yield wave * mixVolume
 
       masterClock++

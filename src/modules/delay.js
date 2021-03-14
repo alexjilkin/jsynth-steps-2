@@ -1,7 +1,7 @@
 import {sampleRate} from '../consts'
 import createModule from './createModule'
 
-const time = 0.5;
+const time = 0.4;
 const depth = 6;
 const gain = 0.6;
 const feedbackSize = sampleRate * 4 * depth;
@@ -13,10 +13,10 @@ function delay(u, n) {
     feedback[cyclicN] = u;
     
     for(let i = 1; i < depth; i++) {     
-        const currentFeedbackIndex = cyclicN - (i * delayAmountBySamples) < 0 ? feedbackSize - (i * delayAmountBySamples) : cyclicN - (i * delayAmountBySamples)
-        const currentFeedback = feedback[currentFeedbackIndex]
+        const feedbackIndex = Math.abs(cyclicN - (i * delayAmountBySamples))
+        const feedbackValue = feedback[feedbackIndex]
         
-        u = (u * 0.9) + (Math.pow(gain, i) * (u + currentFeedback))
+        u += (Math.pow(gain, i) * feedbackValue)
     }
 
     return u;
