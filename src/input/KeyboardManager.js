@@ -17,9 +17,7 @@ export const press = (frequencyModulation, id) => {
     numOfGeneratingInstances++;
 
     if (isFirstTime) {
-        const generator = waveGenerator(triggers);
-
-        browserPlayer.play(generator)
+        browserPlayer.play()
         isFirstTime = false;
     }
 }

@@ -1,7 +1,5 @@
-import {getTriggers} from './input/KeyboardManager'
 import oscillator from './modules/oscillator'
 import delay from './modules/delay'
-import { sampleRate } from './consts';
 
 let masterClock = 0;
 
@@ -31,29 +29,27 @@ export const subscribeGeneratingModule = (module) => {
 subscribeGeneratingModule(oscillator)
 subscribeModule(delay)
 
-export function* waveGenerator() {
-    while(true) {   
-      const triggers = getTriggers()
-      let wave = 0;
+export function waveGenerator(triggers) {
+  let wave = 0;
 
-      Object.keys(triggers).forEach((id) => {
-        const {frequencyModulation, shouldGenerate} = triggers[id]
+  Object.keys(triggers).forEach((id) => {
+    const {frequencyModulation, shouldGenerate} = triggers[id]
 
-        if (!shouldGenerate) return;
+    if (!shouldGenerate) return;
 
-        wave = generatingModules.reduce((acc, {func}) => {
-          return acc + func(acc, masterClock, frequencyModulation)
-        }, wave)
-      })
+    wave = generatingModules.reduce((acc, {func}) => {
+      return acc + func(acc, masterClock, frequencyModulation)
+    }, wave)
+  })
 
-      wave = modules.reduce((acc, {func}) => {
-        return func(acc, masterClock)
-      }, wave)
+  wave = modules.reduce((acc, {func}) => {
+    return func(acc, masterClock)
+  }, wave)
+  masterClock++
+  
+  // Decrease volume 
+  const mixVolume =  0.2
+  return wave * mixVolume
 
-      // Decrease volume 
-      const mixVolume =  0.2
-      yield wave * mixVolume
-
-      masterClock++
-    }
-  }
+   
+}
