@@ -3,7 +3,7 @@ import {getTriggers} from '../input/KeyboardManager'
 
 export const play = async (waveGenerator) => {
   let isPlaying = false
-  window.waveGenerator = waveGenerator;
+
   const context = new AudioContext({sampleRate})
   await context.audioWorklet.addModule('worklet.js')
   let synth = new AudioWorkletNode(context, 'synth')

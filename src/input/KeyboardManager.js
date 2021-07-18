@@ -1,5 +1,5 @@
 import * as browserPlayer from '../output/browserPlayer'
-import {waveGenerator, getMasterClock} from '../synth'
+import {getMasterClock} from '../synth'
 
 const triggers = {}
 
